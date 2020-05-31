@@ -7,6 +7,6 @@ matplotlib
 requests
 boto3
 botocore
-tensorflow==1.13.2
+tensorflow>=1.15.2 # 1.13.2 works best
 opencv-python
 PyYAML

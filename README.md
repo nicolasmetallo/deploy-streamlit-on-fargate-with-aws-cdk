@@ -8,7 +8,7 @@ But before we actually run any image inpainting, we need to generate a mask imag
 
 The following is the result that we expect to get. You can see the input image (see below for author information) on the left and the output image on the right. You can find all the steps that you need to get that result in the `demo.ipynb` notebook.
 
-![](/Users/metallo/local-dev/legendary-streamlit-demo/cdk/app/src/magic_trick.png)
+![](cdk/app/src/magic_trick.png)
 
 But, what if we want to build something that's more interactive, dynamic, easy to debug, and great for sharing models and results with non-technical people? There are options out there that can you help with this, such as Jupyter Voila and Plotly Dash, but none of them really does all of these at the same time. That's when I started to look into [Streamlit](https://www.streamlit.io/), an open source app framework that runs in Python and lets you create web apps that look great with very little dev work. I won't get into too much detail on what Streamlit is and how it works, but you can see a lot of examples and demos [here](https://awesome-streamlit.org/) and some best practices [here](https://pmbaumgartner.github.io/streamlitopedia/front/introduction.html).
 
@@ -208,7 +208,7 @@ $ docker run -it --rm -p '8501:8501' demo/magic-trick
 
 And if you open your browser and go to `http://localhost:8501/` you should be able to see the following... **Success!** :smiley:
 
-![](/Users/metallo/local-dev/legendary-streamlit-demo/cdk/app/src/local_container.png)
+![](cdk/app/src/local_container.png)
 
 ## 3. Deploy your Streamlit app to AWS Fargate using AWS CDK
 
@@ -450,7 +450,7 @@ arn:aws:cloudformation:eu-west-2:************:stack/cdk/c7f457f0-a34d-11ea-a167-
 
 Now when you open your browser and go to the `cdk.WebDemoServiceServiceURL` you will see your. Please note that as we have assigned only 0.5 vCPU to the task, the inference time will be quite long, between 20 to 30 seconds. But you can always go back, change this, and re-deploy with `cdk deploy`.
 
-![](/Users/metallo/local-dev/legendary-streamlit-demo/cdk/app/src/web_demo.gif)
+![](cdk/app/src/web_demo.gif)
 
 **Congratulations! Your app is now online** :smiley:.
 
