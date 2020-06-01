@@ -548,11 +548,11 @@ Stack ARN:
 arn:aws:cloudformation:eu-west-2:************:stack/cdk/c7f457f0-a34d-11ea-a167-******e602c
 ```
 
-Now when you open your browser and go to the `cdk.WebDemoServiceServiceURL` you will see your. Please note that as we have assigned only 0.5 vCPU to the task, the inference time will be quite long, between 20 to 30 seconds. But you can always go back, change this, and re-deploy with `cdk deploy`.
+Now when you open your browser and go to the `cdk.WebDemoServiceServiceURL` you will see your application. Please note that as we have assigned only 0.5 vCPU to the task, the inference time will be quite long, between 20 to 30 seconds. But you can always go back, change this, and re-deploy with `cdk deploy`.
 
 ![](cdk/app/src/web_demo.gif)
 
-**Congratulations! Your app is now online** :smiley:.
+**Congratulations! Your app is now online** :smiley:
 
 ### Delete your AWS CDK project
 
