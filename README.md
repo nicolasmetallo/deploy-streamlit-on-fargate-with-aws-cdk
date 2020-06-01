@@ -224,7 +224,7 @@ class Rekognition:
         return blank
 ```
 
-Once we have both images, we should be able to ran the image inpainting model prediction.
+Once we have both images, we should be able to run the image inpainting model prediction.
 
 ```python
 class InPainting:
