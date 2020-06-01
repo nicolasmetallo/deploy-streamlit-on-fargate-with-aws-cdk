@@ -1,4 +1,4 @@
-# Create beautiful and simple ML web apps that you can deploy at scale easily
+# Create beautiful and simple ML web apps that you can deploy at scale in a few steps
 This repo will teach you how to build an ML-powered web app from scratch and deploy at scale to AWS Fargate from start to finish using [Streamlit](https://www.streamlit.io/) and [AWS CDK](https://docs.aws.amazon.com/cdk/latest/guide/home.html).
 
 ## What are we going to build?
@@ -109,39 +109,36 @@ def show_images(input_img, output_img):
 #### Read your input image
 
 ```python
-    st.write('---')
-    st.header('Read image')
+   st.header('Read image')
     st.image(
         'src/input_img.png',
         caption='Illustration by https://blush.design/artists/vijay-verma',
         use_column_width=True,
     )
-    st.write('Please choose any of the following options')
-    example_folder_checkbox = st.checkbox('Choose example from library')
-    remote_img_checkbox = st.checkbox('Download image from URL')
-    upload_img_checkbox = st.checkbox('Upload your own image')
-    options = [example_folder_checkbox, remote_img_checkbox, upload_img_checkbox]
+    options = st.radio('Please choose any of the following options',
+        (
+            'Choose example from library',
+            'Download image from URL',
+            'Upload your own image',
+        )
+    )
 
     input_image = None
-    if not any(options):
-        st.info('Please select an option to continue')
-    elif sum(options) > 1:
-        st.info('Please choose only one option at a time')
-    elif example_folder_checkbox:
+    if options == 'Choose example from library':
         image_files = list(sorted([x for x in Path('test_images').rglob('*.jpg')]))
         selected_file = st.selectbox(
             'Select an image file from the list', image_files
         )
         st.write(f'You have selected `{selected_file}`')
         input_image = Image.open(selected_file)
-    elif remote_img_checkbox:
+    elif options == 'Download image from URL':
         image_url = st.text_input('Image URL')
         try:
             r = requests.get(image_url)
             input_image = Image.open(io.BytesIO(r.content))
         except Exception:
             st.error('There was an error downloading the image. Please check the URL again.')
-    elif upload_img_checkbox:
+    elif options == 'Upload your own image':
         uploaded_file = st.file_uploader("Choose file to upload")
         if uploaded_file:
             input_image = Image.open(io.BytesIO(uploaded_file.read()))
@@ -171,6 +168,109 @@ def show_images(input_img, output_img):
         except Exception as e:
             st.error(e)
             st.error('There was an error processing the input image')
+```
+
+#### `Helpers.py`
+
+For us to generate an inpainted image, we need the input image and a masked image where every pixel is white except where our target is. As mentioned before, we are going to use AWS Rekognition to detect an object and a custom Class to create a masked image from that detection.
+
+```python
+class Rekognition:
+    def __init__(self):
+        self.client = boto3.client(
+            'rekognition',
+            region_name = 'eu-west-2', # not needed
+            )
+
+    def predict_labels(self, image_bytes, max_labels=10, min_conf=90):
+        response = self.client.detect_labels(
+            Image = {'Bytes': image_bytes},
+            MaxLabels = max_labels,
+            MinConfidence = min_conf,
+            )
+        return response['Labels']
+    
+    def return_mask_img(self, image_bytes):
+        image = Image.open(io.BytesIO(image_bytes))
+        imgWidth, imgHeight = image.size
+        blank = Image.new('RGB', image.size, (255, 255, 255))
+        draw = ImageDraw.Draw(blank)
+        response = self.predict_labels(image_bytes)
+        
+        for idx, label in enumerate(response):
+            name = label['Name']
+            instances = label['Instances']
+
+            if len(instances) == 0: continue
+            for instance in instances:
+                confidence = instance['Confidence']
+                box = instance['BoundingBox']
+                left = imgWidth * box['Left']
+                top = imgHeight * box['Top']
+                width = imgWidth * box['Width']
+                height = imgHeight * box['Height']
+
+                points = (
+                    (left, top),
+                    (left + width, top),
+                    (left + width, top + height),
+                    (left , top + height),
+                    (left, top),
+                )
+
+                # draw bounding box
+                draw.rectangle([left, top, left + width, top + height], fill='black')
+                
+        return blank
+```
+
+Once we have both images, we should be able to ran the image inpainting model prediction.
+
+```python
+class InPainting:
+    def __init__(self):
+        self.rekognition = Rekognition() 
+        self.multiple = 6
+        self.INPUT_SIZE = 512  # input image size for Generator
+        self.ATTENTION_SIZE = 32 # size of contextual attention
+        
+    def PIL_to_cv2(self, pil_img):
+        np_img = np.array(pil_img.convert('RGB'))
+        return cv2.cvtColor(np_img, cv2.COLOR_RGB2BGR)
+    
+    def PIL_to_image_bytes(self, img):
+        buffer = io.BytesIO()
+        img.save(buffer, format='JPEG')
+        return buffer.getvalue()
+    
+    def cv2_to_PIL(self, cv2_im):
+        cv2_im = cv2.cvtColor(cv2_im, cv2.COLOR_BGR2RGB)
+        return Image.fromarray(cv2_im)
+                
+    def run_main(self, input_image, max_size = (1024,1024)):
+        with tf.Graph().as_default():
+            with open('sample-imageinpainting-HiFill/GPU_CPU/pb/hifill.pb', "rb") as f:
+                output_graph_def = tf.GraphDef()
+                output_graph_def.ParseFromString(f.read())
+                tf.import_graph_def(output_graph_def, name="")
+
+            with tf.Session() as sess:
+                init = tf.global_variables_initializer()
+                sess.run(init)
+                image_ph = sess.graph.get_tensor_by_name('img:0')
+                mask_ph = sess.graph.get_tensor_by_name('mask:0')
+                inpainted_512_node = sess.graph.get_tensor_by_name('inpainted:0')
+                attention_node = sess.graph.get_tensor_by_name('attention:0')
+                mask_512_node = sess.graph.get_tensor_by_name('mask_processed:0')
+        
+                input_image.thumbnail(max_size)
+                image_bytes = self.PIL_to_image_bytes(input_image)
+                raw_mask = self.PIL_to_cv2(self.rekognition.return_mask_img(image_bytes))
+                raw_img = self.PIL_to_cv2(input_image)
+                inpainted = self.inpaint(
+                            raw_img, raw_mask, sess, inpainted_512_node, 
+                            attention_node, mask_512_node, image_ph, mask_ph, self.multiple)
+                return self.cv2_to_PIL(inpainted)
 ```
 
 ### Create `Dockerfile`

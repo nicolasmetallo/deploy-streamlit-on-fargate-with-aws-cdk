@@ -101,32 +101,30 @@ def main():
         caption='Illustration by https://blush.design/artists/vijay-verma',
         use_column_width=True,
     )
-    st.write('Please choose any of the following options')
-    example_folder_checkbox = st.checkbox('Choose example from library')
-    remote_img_checkbox = st.checkbox('Download image from URL')
-    upload_img_checkbox = st.checkbox('Upload your own image')
-    options = [example_folder_checkbox, remote_img_checkbox, upload_img_checkbox]
+    options = st.radio('Please choose any of the following options',
+        (
+            'Choose example from library',
+            'Download image from URL',
+            'Upload your own image',
+        )
+    )
 
     input_image = None
-    if not any(options):
-        st.info('Please select an option to continue')
-    elif sum(options) > 1:
-        st.info('Please choose only one option at a time')
-    elif example_folder_checkbox:
+    if options == 'Choose example from library':
         image_files = list(sorted([x for x in Path('test_images').rglob('*.jpg')]))
         selected_file = st.selectbox(
             'Select an image file from the list', image_files
         )
         st.write(f'You have selected `{selected_file}`')
         input_image = Image.open(selected_file)
-    elif remote_img_checkbox:
+    elif options == 'Download image from URL':
         image_url = st.text_input('Image URL')
         try:
             r = requests.get(image_url)
             input_image = Image.open(io.BytesIO(r.content))
         except Exception:
             st.error('There was an error downloading the image. Please check the URL again.')
-    elif upload_img_checkbox:
+    elif options == 'Upload your own image':
         uploaded_file = st.file_uploader("Choose file to upload")
         if uploaded_file:
             input_image = Image.open(io.BytesIO(uploaded_file.read()))
