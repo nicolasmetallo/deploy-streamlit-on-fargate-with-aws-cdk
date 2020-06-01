@@ -415,7 +415,7 @@ Install the AWS construct library modules for Amazon EC2 and Amazon ECS.
 $ pip install aws_cdk.aws_ec2 aws_cdk.aws_ecs aws_cdk.aws_ecs_patterns
 ```
 
-###Create a Fargate service
+### Create a Fargate service
 
 There are two different ways to run your container tasks with Amazon ECS:
 
