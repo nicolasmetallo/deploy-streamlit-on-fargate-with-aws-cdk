@@ -142,8 +142,7 @@ def main():
     # do a magic trick!
     st.header('Run prediction')
     st.write('')
-    prediction_checkbox = st.checkbox('Do a magic trick!')
-    if input_image and prediction_checkbox:
+    if input_image and st.button('Do a magic trick!'):
         try:
             with st.spinner():
                 output_image = magic_trick.run_main(input_image)
@@ -151,7 +150,6 @@ def main():
         except Exception as e:
             st.error(e)
             st.error('There was an error processing the input image')
-
     if not input_image: st.warning('There is no image loaded')
 
 # Run Application

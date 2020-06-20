@@ -41,13 +41,13 @@ class CdkStack(core.Stack):
         fargate_service = ecs_patterns.ApplicationLoadBalancedFargateService(
             self, "WebDemoService",
             cluster=cluster,            # Required
-            cpu=512,                    # Default is 256 (512 is 0.5 vCPU)
+            cpu=2048,                    # Default is 256 (512 is 0.5 vCPU, 2048 is 2 vCPU)
             desired_count=1,            # Default is 1
             task_image_options=ecs_patterns.ApplicationLoadBalancedTaskImageOptions(
                 image=image, 
                 container_port=8501,
                 ),
-            memory_limit_mib=2048,      # Default is 512
+            memory_limit_mib=4096,      # Default is 512
             public_load_balancer=True)  # Default is True
 
         # Add policies to task role
