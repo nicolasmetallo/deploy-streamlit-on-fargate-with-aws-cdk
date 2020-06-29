@@ -12,6 +12,40 @@ The following is the result that we expect to get. You can see the input image (
 
 But, what if we want to build something that's more interactive, dynamic, easy to debug, and great for sharing models and results with non-technical people? There are options out there that can you help with this, such as Jupyter Voila and Plotly Dash, but none of them really does all of these at the same time. That's when I started to look into [Streamlit](https://www.streamlit.io/), an open source app framework that runs in Python and lets you create web apps that look great with very little dev work. I won't get into too much detail on what Streamlit is and how it works, but you can see a lot of examples and demos [here](https://awesome-streamlit.org/) and some best practices [here](https://pmbaumgartner.github.io/streamlitopedia/front/introduction.html).
 
+## TL;DR
+
+Clone the tutorial and `cd` into it
+```
+$ git clone https://github.com/nicolasmetallo/legendary-streamlit-demo
+$ cd legendary-streamlit-demo
+```
+(Optional) build image and run locally for debugging
+```
+$ cd cdk/app
+$ docker build -t demo/magic-trick .
+$ docker run -it --rm -p '8501:8501' demo/magic-trick
+```
+Setup your aws credentials, install and configure aws cdk
+```
+$ cd ..
+$ aws configure
+$ npm install -g aws-cdk
+$ python3 -m venv .env
+$ source .env/bin/activate
+$ pip install -r requirements.txt
+$ pip install aws_cdk.aws_ec2 aws_cdk.aws_ecs aws_cdk.aws_ecs_patterns
+```
+Deploy
+```
+$ cdk synth
+$ cdk deploy
+```
+
+Delete your stack (stop any unexpected expenses)
+```
+$ cdk destroy
+```
+
 ## Getting started
 
 Every person has their own way of going around these type of projects but what works best for me is to follow a lean methodology where I can design/build, measure, and learn fast. These are the steps that I normally do:
@@ -28,34 +62,6 @@ I won't go into much detail about the first step, but I will dive deeper into ho
 - [AWS CDK](https://docs.aws.amazon.com/cdk/latest/guide/getting_started.html)
 - [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html)
 - Docker
-
-## TL;DR
-```
-# clone the tutorial and cd into it
-$ git clone https://github.com/nicolasmetallo/legendary-streamlit-demo
-$ cd legendary-streamlit-demo
-
-# (optional) build image and run locally for debugging
-$ cd cdk/app
-$ docker build -t demo/magic-trick .
-$ docker run -it --rm -p '8501:8501' demo/magic-trick
-
-# setup your aws credentials, install and configure aws cdk
-$ cd ..
-$ aws configure
-$ npm install -g aws-cdk
-$ python3 -m venv .env
-$ source .env/bin/activate
-$ pip install -r requirements.txt
-$ pip install aws_cdk.aws_ec2 aws_cdk.aws_ecs aws_cdk.aws_ecs_patterns
-
-# deploy
-$ cdk synth
-$ cdk deploy
-
-# delete your stack (stop any unexpected expenses)
-$ cdk destroy
-```
 
 ## 1. Create demo notebook
 
