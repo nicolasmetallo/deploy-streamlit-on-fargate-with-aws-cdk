@@ -29,6 +29,34 @@ I won't go into much detail about the first step, but I will dive deeper into ho
 - [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html)
 - Docker
 
+## TL;DR
+```
+# clone the tutorial and cd into it
+$ git clone https://github.com/nicolasmetallo/legendary-streamlit-demo
+$ cd legendary-streamlit-demo
+
+# (optional) build image and run locally for debugging
+$ cd cdk/app
+$ docker build -t demo/magic-trick .
+$ docker run -it --rm -p '8501:8501' demo/magic-trick
+
+# setup your aws credentials, install and configure aws cdk
+$ cd ..
+$ aws configure
+$ npm install -g aws-cdk
+$ python3 -m venv .env
+$ source .env/bin/activate
+$ pip install -r requirements.txt
+$ pip install aws_cdk.aws_ec2 aws_cdk.aws_ecs aws_cdk.aws_ecs_patterns
+
+# deploy
+$ cdk synth
+$ cdk deploy
+
+# delete your stack (stop any unexpected expenses)
+$ cdk destroy
+```
+
 ## 1. Create demo notebook
 
 Go to your Terminal and clone this repository
@@ -561,6 +589,10 @@ If you no longer want your app to be out there, you might want to clear everythi
 ```bash
 $ cdk destroy
 ```
+
+## Community Updates
+
+- Zeph Grunschlag has taken this repo and made into a "one-click" deployment. [Check it out!](https://github.com/tzaffi/streamlit-cdk-fargate).
 
 ## References
 
