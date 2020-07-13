@@ -614,3 +614,7 @@ $ cdk destroy
 | `image_4.jpg` | hanya kumuh           | [Link](https://unsplash.com/photos/vNVPAKf1GO4) |
 | `image_5.jpg` | Guillaume de Germain  | [Link](https://unsplash.com/photos/h1itWfWeQM4) |
 | `image_6.jpg` | Timur Romanov         | [Link](https://unsplash.com/photos/YgoLFkdrD8Q) |
+
+## Disclaimer
+- The content provided in this repository is for demonstration purposes and not meant for production. You should use your own discretion when using the content.
+- The ideas and opinions outlined in these examples are my own and do not represent the opinions of AWS.
