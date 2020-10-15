@@ -7,6 +7,6 @@ matplotlib
 requests
 boto3
 botocore
-tensorflow==1.15.2 # 1.13.2 is recommended
+tensorflow==1.15.4 # 1.13.2 is recommended
 opencv-python
 PyYAML
