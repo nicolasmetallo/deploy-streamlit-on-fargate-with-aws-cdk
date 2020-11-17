@@ -156,13 +156,13 @@ class InPainting:
                 
     def run_main(self, input_image, max_size = (1024,1024)):
         with tf.Graph().as_default():
-            with open('sample-imageinpainting-HiFill/GPU_CPU/pb/hifill.pb', "rb") as f:
-                output_graph_def = tf.GraphDef()
+            with open('src/model_weights.pb', "rb") as f:
+                output_graph_def = tf.compat.v1.GraphDef()
                 output_graph_def.ParseFromString(f.read())
                 tf.import_graph_def(output_graph_def, name="")
 
             with tf.Session() as sess:
-                init = tf.global_variables_initializer()
+                init = tf.compat.v1.global_variables_initializer()
                 sess.run(init)
                 image_ph = sess.graph.get_tensor_by_name('img:0')
                 mask_ph = sess.graph.get_tensor_by_name('mask:0')
