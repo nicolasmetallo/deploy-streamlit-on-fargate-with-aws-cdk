@@ -92,7 +92,7 @@ Once it has completed you'll see `CREATE_COMPLETE` in green indicating that the 
 Now you can browse to `SageMaker`, into `Notebook Instances`, and open your new Notebook. 
 
 </details>
----
+
 ## Getting started
 
 Every person has their own way of going around these type of projects but what works best for me is to follow a lean methodology where I can design/build, measure, and learn fast. These are the steps that I normally do:
@@ -110,7 +110,7 @@ I won't go into much detail about the first step, but I will dive deeper into ho
 - [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html)
 - Docker
 
-## 1. Create demo notebook
+## 1) Create Demo notebook
 
 Go to your Terminal and clone this repository
 
@@ -125,7 +125,7 @@ $ cd cdk/app
 $ pip install -r requirements.txt
 ```
 
-## 2. Create your Streamlit application
+## 2) Create your Streamlit application
 
 ### Project structure
 
@@ -391,7 +391,7 @@ And if you open your browser and go to `http://localhost:8501/` you should be ab
 
 ![](cdk/app/src/local_container.png)
 
-## 3. Deploy your Streamlit app to AWS Fargate using AWS CDK
+## 3) Deploy your `Streamlit` app to `AWS Fargate` using `AWS CDK`
 
 ### Quick intro
 
@@ -418,7 +418,7 @@ $ aws configure
 
 If you, on the other hand, are going to deploy your stack from an AWS instance (e.g. EC2, SageMaker, etc.) then your environment will take the credentials and role that you have assigned to that instance, and you don't need to configure anything. You just need to double check that your role can you everything you want to do.
 
-### Install AWS CDK
+### Install `AWS CDK`
 
 Go to your Terminal and install the AWS CDK using the following command.
 
