@@ -161,7 +161,7 @@ class InPainting:
                 output_graph_def.ParseFromString(f.read())
                 tf.import_graph_def(output_graph_def, name="")
 
-            with tf.Session() as sess:
+            with tf.compat.v1.Session() as sess:
                 init = tf.compat.v1.global_variables_initializer()
                 sess.run(init)
                 image_ph = sess.graph.get_tensor_by_name('img:0')

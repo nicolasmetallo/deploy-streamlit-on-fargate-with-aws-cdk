@@ -19,7 +19,7 @@ Clone the tutorial and `cd` into it
 $ git clone https://github.com/nicolasmetallo/legendary-streamlit-demo
 $ cd legendary-streamlit-demo
 ```
-(Optional) build image and run locally for debugging
+`Optional` build image and run locally for debugging
 ```
 $ cd cdk/app
 $ docker build -t demo/magic-trick .
@@ -46,6 +46,53 @@ Delete your stack (stop any unexpected expenses)
 $ cdk destroy
 ```
 
+## Build your environment directly on AWS
+### Environment pre-requisites
+This only applies if you are deploying with the `CloudFormation` template, otherwise consult the IAM permissions needed for your specific task.
+
+- AWS Account
+- User with administrator access to the AWS Account
+
+### Build your environment
+You will deploy a `CloudFormation` template that will do most of the initial setup for you. You need to be logged into your AWS account before you can run this so it will ask you for your credentials when you click the button below. Once you do that, a process will start that will deploy each item via `CloudFormation`.
+
+[![Launch Stack](https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home#/stacks/new?stackName=StreamlitWorkshop&templateURL=https://streamlit-aws-demo-github.s3-eu-west-1.amazonaws.com/template.yaml)
+
+Have a look at these screenshots if you have any question
+
+<details>
+  <summary>Click to expand the CF instructions</summary>
+
+## `CloudFormation` Wizard
+
+Start by clicking `Next` at the bottom:
+
+![](cloudformation/imgs/cf_1.png)
+
+In the next page you can choose your own names for the Stack and SageMaker notebook or use the default values. After you are happy with the parameters set, click `Next` again.
+
+![](cloudformation/imgs/cf_2.png)
+
+You don't need to fill out anything on this page as this is optional. You can scroll to the bottom and click `Next`.
+
+![](cloudformation/imgs/cf_3.png)
+
+Check the box to enable the template to create new IAM resources and then click `Create Stack`.
+
+![](cloudformation/imgs/cf_4.png)
+
+For a few minutes `CloudFormation` will be creating the resources described above on your behalf and your Console should look like this while it is provisioning:
+
+![](cloudformation/imgs/cf_5.png)
+
+Once it has completed you'll see `CREATE_COMPLETE` in green indicating that the work has been completed:
+
+![](cloudformation/imgs/cf_6.png)
+
+Now you can browse to `SageMaker`, into `Notebook Instances`, and open your new Notebook. 
+
+</details>
+---
 ## Getting started
 
 Every person has their own way of going around these type of projects but what works best for me is to follow a lean methodology where I can design/build, measure, and learn fast. These are the steps that I normally do:
