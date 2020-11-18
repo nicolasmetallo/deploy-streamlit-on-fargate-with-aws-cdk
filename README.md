@@ -70,7 +70,7 @@ This only applies if you are deploying with the `CloudFormation` template, other
 ### Build your environment
 You will deploy a `CloudFormation` template that will do most of the initial setup for you. You need to be logged into your AWS account before you can run this so it will ask you for your credentials when you click the button below. Once you do that, a process will start that will deploy each item via `CloudFormation`.
 
-[![Launch Stack](https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home#/stacks/new?stackName=StreamlitWorkshop&templateURL=https://streamlit-aws-demo-github.s3-eu-west-1.amazonaws.com/template.yaml)
+[![Launch Stack](https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home#/stacks/new?stackName=StreamlitWorkshop&templateURL=https://raw.githubusercontent.com/nicolasmetallo/legendary-streamlit-demo/master/cloudformation/template.yaml)
 
 Have a look at these screenshots if you have any question
 
