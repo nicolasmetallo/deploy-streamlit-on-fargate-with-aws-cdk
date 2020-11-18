@@ -354,6 +354,14 @@ class InPainting:
                 return self.cv2_to_PIL(inpainted)
 ```
 
+### Test your application
+By default Streamlit is installed in `python3` virtual environment. Start Streamlit server by running the following command in notebook terminal:
+- source activate python3
+- streamlit run app.py
+
+You can now access your Streamlit web app using the URL `{base_url}/proxy/{port}/` in a browser. With a slash at the end.
+For example: https://{notebookname}.notebook.{region}.sagemaker.aws/proxy/8501/
+
 ### Create `Dockerfile`
 
 ```dockerfile
@@ -362,9 +370,7 @@ EXPOSE 8501
 WORKDIR /app
 COPY requirements.txt ./requirements.txt
 RUN pip3 install -r requirements.txt
-RUN git clone https://github.com/Atlas200dk/sample-imageinpainting-HiFill.git && \
-        cd sample-imageinpainting-HiFill && \
-        git checkout 1f7f769bd1ea225d4d5c8b094dd261ca9172927b
+
 COPY . .
 CMD streamlit run app.py \
     --server.headless true \
@@ -373,9 +379,9 @@ CMD streamlit run app.py \
     --browser.gatherUsageStats false
 ```
 
-### Build image and run locally for debugging
+### Build image and run locally or in AWS for debugging
 
-Run the following command in your Terminal inside `cdk/cdk/app` to build your container image
+Run the following command in your Terminal inside `./cdk/app` to build your container image
 
 ```
 $ docker build -t demo/magic-trick .
@@ -387,7 +393,7 @@ Now run the container
 $ docker run -it --rm -p '8501:8501' demo/magic-trick
 ```
 
-And if you open your browser and go to `http://localhost:8501/` you should be able to see the following... **Success!** :smiley:
+And if you open your browser and go to `http://localhost:8501/` or `https://{notebookname}.notebook.{region}.sagemaker.aws/proxy/8501/`, you should be able to see the following... **Success!** :smiley:
 
 ![](cdk/app/src/local_container.png)
 

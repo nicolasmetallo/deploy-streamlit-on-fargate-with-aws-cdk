@@ -38,15 +38,17 @@ Resources:
         - "arn:aws:iam::aws:policy/AmazonECS_FullAccess"
         - "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryFullAccess"
         - "arn:aws:iam::aws:policy/AmazonEC2ContainerServiceFullAccess"
-        - "arn:aws:iam::aws:policy/IAMFullAccess"
+        - "arn:aws:iam::aws:policy/AmazonEC2FullAccess" 
+        - "arn:aws:iam::aws:policy/IAMFullAccess" 
+        - "arn:aws:iam::aws:policy/AWSCloudFormationFullAccess"
 
   # SageMaker Notebook
   NotebookInstance:
     Type: "AWS::SageMaker::NotebookInstance"
     Properties:
       InstanceType: "ml.t2.medium"
-      LifecycleConfigName: !GetAtt NotebookInstanceLifecycleConfig.NotebookInstanceLifecycleConfigName
       NotebookInstanceName: !Ref NotebookName
+      LifecycleConfigName: !GetAtt NotebookInstanceLifecycleConfig.NotebookInstanceLifecycleConfigName
       RoleArn: !GetAtt SageMakerIamRole.Arn
       VolumeSizeInGB: !Ref VolumeSize
       DefaultCodeRepository: https://github.com/nicolasmetallo/legendary-streamlit-demo.git
@@ -55,14 +57,14 @@ Resources:
   NotebookInstanceLifecycleConfig:
     Type: AWS::SageMaker::NotebookInstanceLifecycleConfig
     Properties:
-      NotebookInstanceLifecycleConfigName: !Sub ${ResourceName}-lifecycle-config
+      NotebookInstanceLifecycleConfigName: !Sub "${NotebookName}-lifecycle-config"
       OnStart:
         - Content:
             Fn::Base64: |
               set -e
 
               # OVERVIEW
-              # Source: https://github.com/aws-samples/amazon-sagemaker-notebook-instance-lifecycle-config-samples/pull/50
+              # Modified from: https://github.com/aws-samples/amazon-sagemaker-notebook-instance-lifecycle-config-samples/pull/50
               #
               # This script enables Streamlit webapp to run on SageMaker notebook instance.
               #
@@ -106,6 +108,14 @@ Resources:
               sudo initctl restart jupyter-server --no-wait
 
               source /home/ec2-user/anaconda3/bin/deactivate
+              
+              # Install Node.js and AWS CDK
+              # Source: https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/setting-up-node-on-ec2-instance.html
+              curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+              . ~/.nvm/nvm.sh
+              nvm install node
+              node -e "console.log('Running Node.js ' + process.version)"
+              npm install -g aws-cdk
 
               EOF
 Outputs:

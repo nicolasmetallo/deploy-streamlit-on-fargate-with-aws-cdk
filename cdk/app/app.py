@@ -127,7 +127,7 @@ def main():
     elif options == 'Upload your own image':
         uploaded_file = st.file_uploader("Choose file to upload")
         if uploaded_file:
-            input_image = Image.open(io.BytesIO(uploaded_file.read()))
+            input_image = Image.open(io.BytesIO(uploaded_file.decode()))
             st.success('Image was successfully uploaded')
 
     if input_image:
