@@ -13,7 +13,19 @@ The following is the result that we expect to get. You can see the input image (
 But, what if we want to build something that's more interactive, dynamic, easy to debug, and great for sharing models and results with non-technical people? There are options out there that can you help with this, such as Jupyter Voila and Plotly Dash, but none of them really does all of these at the same time. That's when I started to look into [Streamlit](https://www.streamlit.io/), an open source app framework that runs in Python and lets you create web apps that look great with very little dev work. I won't get into too much detail on what Streamlit is and how it works, but you can see a lot of examples and demos [here](https://awesome-streamlit.org/) and some best practices [here](https://pmbaumgartner.github.io/streamlitopedia/front/introduction.html).
 
 ## TL;DR
+### AWS
+After you have launched your CF stack, open a new terminal within the `StreamlitWorkshop` SageMaker Notebook, and run:
+```
+$ cd SageMaker/legendary-streamlit-demo/cdk
+$ docker build -t demo/magic-trick app/
+$ docker run -it --rm -p '8501:8501' demo/magic-trick
+$ pip install -r requirements.txt
+$ pip install aws_cdk.aws_ec2 aws_cdk.aws_ecs aws_cdk.aws_ecs_patterns
+$ cdk synth
+$ cdk deploy
+```
 
+### Local
 Clone the tutorial and `cd` into it
 ```
 $ git clone https://github.com/nicolasmetallo/legendary-streamlit-demo

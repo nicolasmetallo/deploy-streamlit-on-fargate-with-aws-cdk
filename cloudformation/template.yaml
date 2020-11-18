@@ -107,8 +107,6 @@ Resources:
               # Restart jupyter server
               sudo initctl restart jupyter-server --no-wait
 
-              source /home/ec2-user/anaconda3/bin/deactivate
-              
               # Install Node.js and AWS CDK
               # Source: https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/setting-up-node-on-ec2-instance.html
               curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
@@ -117,6 +115,8 @@ Resources:
               node -e "console.log('Running Node.js ' + process.version)"
               npm install -g aws-cdk
 
+              source /home/ec2-user/anaconda3/bin/deactivate
+            
               EOF
 Outputs:
   NotebookInstanceURL:
