@@ -4,9 +4,8 @@ numpy
 requests
 Pillow
 matplotlib
-requests
 boto3
 botocore
 tensorflow
-opencv-python
+opencv-python-headless
 PyYAML

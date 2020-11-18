@@ -100,7 +100,7 @@ Resources:
               pip install streamlit
 
               # Install other dependencies
-              pip install pandas numpy requests Pillow matplotlib boto3 botocore opencv-python PyYAML tensorflow
+              pip install pandas numpy requests Pillow matplotlib boto3 botocore opencv-python-headless PyYAML tensorflow
               
               # Fix remote access problem: https://discuss.streamlit.io/t/remote-access-problem/5829
               pip install --upgrade protobuf

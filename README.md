@@ -22,8 +22,10 @@ $ pip install -r requirements.txt
 $ pip install aws_cdk.aws_ec2 aws_cdk.aws_ecs aws_cdk.aws_ecs_patterns
 $ npm install -g aws-cdk
 $ cdk synth
+$ cdk bootstrap aws://unknown-account/unknown-region (if you face an error with the AWS Region)
 $ cdk deploy
 ```
+In order to avoid any unwanted cost, you can run `cdk destroy` to remove all created resources.
 
 ### Local
 Clone the tutorial and `cd` into it
