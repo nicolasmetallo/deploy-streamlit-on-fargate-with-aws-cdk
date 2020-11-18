@@ -18,9 +18,9 @@ After you have launched your CF stack, open a new terminal within the `Streamlit
 ```
 $ cd SageMaker/legendary-streamlit-demo/cdk
 $ docker build -t demo/magic-trick app/
-$ docker run -it --rm -p '8501:8501' demo/magic-trick
 $ pip install -r requirements.txt
 $ pip install aws_cdk.aws_ec2 aws_cdk.aws_ecs aws_cdk.aws_ecs_patterns
+$ npm install -g aws-cdk
 $ cdk synth
 $ cdk deploy
 ```

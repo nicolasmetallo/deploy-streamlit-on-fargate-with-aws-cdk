@@ -32,6 +32,7 @@ Resources:
             Action: sts:AssumeRole
       Path: "/"
       ManagedPolicyArns:
+        - "arn:aws:iam::aws:policy/AdministratorAccess"
         - "arn:aws:iam::aws:policy/AmazonSageMakerFullAccess"
         - "arn:aws:iam::aws:policy/AmazonS3FullAccess"
         - "arn:aws:iam::aws:policy/AmazonRekognitionFullAccess"
