@@ -16,7 +16,7 @@ But, what if we want to build something that's more interactive, dynamic, easy t
 ### AWS
 After you have launched your CF stack, open a new terminal within the `StreamlitWorkshop` SageMaker Notebook, and run:
 ```
-$ cd SageMaker/legendary-streamlit-demo/cdk
+$ cd SageMaker/deploy-streamlit-on-fargate-with-aws-cdk/cdk
 $ docker build -t demo/magic-trick app/
 $ pip install -r requirements.txt
 $ pip install aws_cdk.aws_ec2 aws_cdk.aws_ecs aws_cdk.aws_ecs_patterns
@@ -30,8 +30,8 @@ In order to avoid any unwanted cost, you can run `cdk destroy` to remove all cre
 ### Local
 Clone the tutorial and `cd` into it
 ```
-$ git clone https://github.com/nicolasmetallo/legendary-streamlit-demo
-$ cd legendary-streamlit-demo
+$ git clone https://github.com/nicolasmetallo/deploy-streamlit-on-fargate-with-aws-cdk
+$ cd deploy-streamlit-on-fargate-with-aws-cdk
 ```
 `Optional` build image and run locally for debugging
 ```
@@ -70,7 +70,7 @@ This only applies if you are deploying with the `CloudFormation` template, other
 ### Build your environment
 You will deploy a `CloudFormation` template that will do most of the initial setup for you. You need to be logged into your AWS account before you can run this so it will ask you for your credentials when you click the button below. Once you do that, a process will start that will deploy each item via `CloudFormation`.
 
-[![Launch Stack](https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home#/stacks/new?stackName=StreamlitWorkshop&templateURL=https://raw.githubusercontent.com/nicolasmetallo/legendary-streamlit-demo/master/cloudformation/template.yaml)
+[![Launch Stack](https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home#/stacks/new?stackName=StreamlitWorkshop&templateURL=https://raw.githubusercontent.com/nicolasmetallo/deploy-streamlit-on-fargate-with-aws-cdk/master/cloudformation/template.yaml)
 
 Have a look at these screenshots if you have any question
 
@@ -129,7 +129,7 @@ I won't go into much detail about the first step, but I will dive deeper into ho
 Go to your Terminal and clone this repository
 
 ```
-$ git clone https://github.com/nicolasmetallo/legendary-streamlit-demo
+$ git clone https://github.com/nicolasmetallo/deploy-streamlit-on-fargate-with-aws-cdk
 ```
 
 Now, `cd` into `cdk/app` and you will find `demo.ipynb`. Install all dependencies and run code inside the notebook.
